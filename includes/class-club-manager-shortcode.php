@@ -162,27 +162,6 @@ class Club_Manager_Shortcode {
         ob_start();
         ?>
         <style>
-            /* Critical CSS - Load correct orange colors IMMEDIATELY */
-            .club-manager-app .bg-orange-50 { background-color: #fff7ed !important; }
-            .club-manager-app .bg-orange-100 { background-color: #ffedd5 !important; }
-            .club-manager-app .bg-orange-200 { background-color: #fed7aa !important; }
-            .club-manager-app .bg-orange-300 { background-color: #fdba74 !important; }
-            .club-manager-app .bg-orange-400 { background-color: #fb923c !important; }
-            .club-manager-app .bg-orange-500 { background-color: #f97316 !important; }
-            .club-manager-app .bg-orange-600 { background-color: #ea580c !important; }
-            .club-manager-app .bg-orange-700 { background-color: #c2410c !important; }
-            .club-manager-app .bg-orange-800 { background-color: #9a3412 !important; }
-            
-            .club-manager-app .text-orange-400 { color: #fb923c !important; }
-            .club-manager-app .text-orange-500 { color: #f97316 !important; }
-            .club-manager-app .text-orange-600 { color: #ea580c !important; }
-            .club-manager-app .text-orange-700 { color: #c2410c !important; }
-            .club-manager-app .text-orange-800 { color: #9a3412 !important; }
-            
-            .club-manager-app .border-orange-200 { border-color: #fed7aa !important; }
-            .club-manager-app .border-orange-300 { border-color: #fdba74 !important; }
-            .club-manager-app .border-orange-500 { border-color: #f97316 !important; }
-            
             /* Fix gradient buttons specifically */
             .club-manager-app .bg-gradient-to-r.from-orange-500.to-orange-600 {
                 background-image: linear-gradient(to right, #f97316, #ea580c) !important;
@@ -192,43 +171,12 @@ class Club_Manager_Shortcode {
                 background-image: linear-gradient(to right, #ea580c, #c2410c) !important;
             }
             
-            /* Hover states */
-            .club-manager-app .hover\:bg-orange-50:hover { background-color: #fff7ed !important; }
-            .club-manager-app .hover\:bg-orange-100:hover { background-color: #ffedd5 !important; }
-            .club-manager-app .hover\:bg-orange-200:hover { background-color: #fed7aa !important; }
-            .club-manager-app .hover\:bg-orange-600:hover { background-color: #ea580c !important; }
-            .club-manager-app .hover\:bg-orange-700:hover { background-color: #c2410c !important; }
-            .club-manager-app .hover\:text-orange-600:hover { color: #ea580c !important; }
-            .club-manager-app .hover\:text-orange-900:hover { color: #7c2d12 !important; }
-            
             .club-manager-app .hover\:from-orange-600:hover {
                 --tw-gradient-from: #ea580c !important;
             }
             
             .club-manager-app .hover\:to-orange-700:hover {
                 --tw-gradient-to: #c2410c !important;
-            }
-            
-            /* Focus states */
-            .club-manager-app .focus\:border-orange-500:focus { border-color: #f97316 !important; }
-            .club-manager-app .focus\:ring-orange-200:focus { --tw-ring-color: #fed7aa !important; }
-            
-            /* Checkbox and radio buttons */
-            .club-manager-app [type="checkbox"]:checked,
-            .club-manager-app [type="radio"]:checked {
-                background-color: #f97316 !important;
-                border-color: #f97316 !important;
-            }
-            
-            /* Range inputs */
-            .club-manager-app .range-orange::-webkit-slider-thumb,
-            .club-manager-app .range::-webkit-slider-thumb {
-                background-color: #f97316 !important;
-            }
-            
-            .club-manager-app .range-orange::-moz-range-thumb,
-            .club-manager-app .range::-moz-range-thumb {
-                background-color: #f97316 !important;
             }
         </style>
         <script>

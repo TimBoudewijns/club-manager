@@ -144,7 +144,6 @@ document.addEventListener('alpine:init', () => {
         
         // Initialize
         init() {
-            console.log('Club Manager initialized');
             this.loadTeams();
             
             // Fix for modals on mobile
@@ -374,17 +373,13 @@ document.addEventListener('alpine:init', () => {
         
         // Evaluation Methods - Fixed for mobile with direct action
         handleEvaluateClick(playerId) {
-            console.log('Handle evaluate click for player ID:', playerId);
             const player = this.teamPlayers.find(p => p.id == playerId);
             if (player) {
                 this.evaluatePlayer(player);
-            } else {
-                console.error('Player not found:', playerId);
             }
         },
         
         evaluatePlayer(player) {
-            console.log('Evaluating player:', player);
             this.evaluatingPlayer = player;
             this.currentEvaluationScores = {};
             this.showEvaluationModal = true;
@@ -393,24 +388,19 @@ document.addEventListener('alpine:init', () => {
             
             // Force DOM update for mobile
             this.$nextTick(() => {
-                console.log('Evaluation modal opened for:', player.first_name, player.last_name);
+                // Evaluation modal opened
             });
         },
         
         // Player Card Methods - Fixed for mobile with direct action
         handlePlayerCardClick(playerId) {
-            console.log('Handle player card click for player ID:', playerId);
             const player = this.teamPlayers.find(p => p.id == playerId);
             if (player) {
                 this.viewPlayerCard(player);
-            } else {
-                console.error('Player not found:', playerId);
             }
         },
         
         async viewPlayerCard(player) {
-            console.log('Viewing player card:', player);
-            
             // If clicking same player, toggle card
             if (this.viewingPlayer && this.viewingPlayer.id === player.id) {
                 this.viewingPlayer = null;
@@ -445,18 +435,13 @@ document.addEventListener('alpine:init', () => {
             setTimeout(() => {
                 this.createSpiderChart();
             }, 500);
-            
-            console.log('Player card opened for:', player.first_name, player.last_name);
         },
         
         // Remove player with direct action
         handleRemoveClick(playerId) {
-            console.log('Handle remove click for player ID:', playerId);
             const player = this.teamPlayers.find(p => p.id == playerId);
             if (player) {
                 this.removePlayerFromTeam(player);
-            } else {
-                console.error('Player not found:', playerId);
             }
         },
         
@@ -487,32 +472,22 @@ document.addEventListener('alpine:init', () => {
             const canvas = document.getElementById('playerCardSpiderChart');
             
             if (!canvas) {
-                console.log('Canvas not found, retrying in 200ms');
                 setTimeout(() => this.createSpiderChart(), 200);
                 return;
             }
             
             if (!this.viewingPlayer) {
-                console.log('No viewing player');
                 return;
             }
             
             if (canvas.offsetParent === null) {
-                console.log('Canvas not visible yet, retrying in 200ms');
                 setTimeout(() => this.createSpiderChart(), 200);
                 return;
             }
             
             if (typeof Chart === 'undefined') {
-                console.log('Chart.js not loaded yet, retrying in 200ms');
                 setTimeout(() => this.createSpiderChart(), 200);
                 return;
-            }
-            
-            // Check if we have evaluation data
-            if (!this.evaluations[this.viewingPlayer.id] || this.evaluations[this.viewingPlayer.id].length === 0) {
-                console.log('No evaluation data yet, showing default chart');
-                // Create chart with default data
             }
             
             const ctx = canvas.getContext('2d');
@@ -523,7 +498,6 @@ document.addEventListener('alpine:init', () => {
                     this.playerCardChart.destroy();
                     this.playerCardChart = null;
                 } catch (e) {
-                    console.error('Error destroying chart:', e);
                     this.playerCardChart = null;
                 }
             }
@@ -531,11 +505,8 @@ document.addEventListener('alpine:init', () => {
             const labels = this.evaluationCategories.map(c => c.name);
             const data = this.evaluationCategories.map(c => {
                 const avg = this.getPlayerCardCategoryAverage(c.key);
-                console.log(`Category ${c.key}: ${avg}`);
                 return parseFloat(avg);
             });
-            
-            console.log('Creating spider chart with data:', data);
             
             // Determine chart label based on selected date
             let chartLabel = 'Season Average Performance';
@@ -615,16 +586,13 @@ document.addEventListener('alpine:init', () => {
                     }
                 });
                 
-                console.log('Spider chart created successfully!');
-                
             } catch (error) {
-                console.error('Error creating spider chart:', error);
+                // Error creating chart
             }
         },
         
         // Force update spider chart (destroys and recreates)
         forceUpdateSpiderChart() {
-            console.log('Force updating spider chart');
             if (this.playerCardChart) {
                 this.playerCardChart.destroy();
                 this.playerCardChart = null;
@@ -637,8 +605,6 @@ document.addEventListener('alpine:init', () => {
         },
         
         async loadEvaluationHistory(player) {
-            console.log('Loading evaluation history for player:', player.id);
-            
             const formData = new FormData();
             formData.append('action', 'cm_get_evaluations');
             formData.append('player_id', player.id);
@@ -652,7 +618,6 @@ document.addEventListener('alpine:init', () => {
             });
             
             const data = await response.json();
-            console.log('Evaluation history response:', data);
             
             if (data.success) {
                 // Store all evaluations
@@ -666,16 +631,12 @@ document.addEventListener('alpine:init', () => {
                 const dates = [...new Set(allEvaluations.map(e => e.evaluated_at.split(' ')[0]))];
                 this.availableEvaluationDates = dates.sort((a, b) => new Date(b) - new Date(a));
                 
-                console.log('Available evaluation dates:', this.availableEvaluationDates);
-                console.log('Filtered evaluation history:', this.playerEvaluationHistory);
-                
                 // Sort by date descending
                 this.playerEvaluationHistory.sort((a, b) => new Date(b.evaluated_at) - new Date(a.evaluated_at));
                 
                 // Reset selected date to 'all'
                 this.selectedEvaluationDate = 'all';
             } else {
-                console.error('Failed to load evaluation history:', data);
                 this.playerEvaluationHistory = [];
                 this.availableEvaluationDates = [];
             }
@@ -712,7 +673,6 @@ document.addEventListener('alpine:init', () => {
         },
         
         onEvaluationDateChange() {
-            console.log('Evaluation date changed to:', this.selectedEvaluationDate);
             // Force recreate the chart with new data
             this.forceUpdateSpiderChart();
         },
@@ -733,7 +693,6 @@ document.addEventListener('alpine:init', () => {
             const data = await response.json();
             if (data.success) {
                 this.evaluations[player.id] = data.data.evaluations || [];
-                console.log(`Loaded ${this.evaluations[player.id].length} evaluations for player ${player.id}`);
             }
         },
         
@@ -785,7 +744,7 @@ document.addEventListener('alpine:init', () => {
                 // Verwijder de oude setTimeout, we gebruiken nu pollForAdvice
                 
             } catch (error) {
-                console.error('Error generating advice:', error);
+                // Error generating advice
             }
         },
         
@@ -820,7 +779,6 @@ document.addEventListener('alpine:init', () => {
         getPlayerCardCategoryAverage(categoryKey) {
             const category = this.evaluationCategories.find(c => c.key === categoryKey);
             if (!category || !this.viewingPlayer || !this.evaluations[this.viewingPlayer.id]) {
-                console.log(`No data for category ${categoryKey}, returning default 5.0`);
                 return '5.0';
             }
             
@@ -830,7 +788,6 @@ document.addEventListener('alpine:init', () => {
                 evaluationsToUse = evaluationsToUse.filter(e => 
                     e.evaluated_at.startsWith(this.selectedEvaluationDate)
                 );
-                console.log(`Filtered evaluations for date ${this.selectedEvaluationDate}:`, evaluationsToUse.length);
             }
             
             // Try to get main category evaluations first
@@ -842,7 +799,6 @@ document.addEventListener('alpine:init', () => {
                 // Calculate average of main category evaluations
                 const sum = categoryEvaluations.reduce((acc, eval) => acc + parseFloat(eval.score), 0);
                 const average = sum / categoryEvaluations.length;
-                console.log(`Category ${categoryKey} main average: ${average.toFixed(1)}`);
                 return average.toFixed(1);
             }
             
@@ -868,12 +824,10 @@ document.addEventListener('alpine:init', () => {
             });
             
             if (scores.length === 0) {
-                console.log(`No scores found for category ${categoryKey}, returning default 5.0`);
                 return '5.0';
             }
             
             const average = scores.reduce((a, b) => a + b, 0) / scores.length;
-            console.log(`Category ${categoryKey} subcategory average: ${average.toFixed(1)}`);
             return average.toFixed(1);
         },
         
@@ -883,7 +837,6 @@ document.addEventListener('alpine:init', () => {
         },
 
         async saveEvaluation() {
-            console.log('Starting to save evaluation...');
             const savePromises = [];
             
             for (const category of this.evaluationCategories) {
@@ -901,7 +854,6 @@ document.addEventListener('alpine:init', () => {
             // Wait for all saves to complete
             try {
                 await Promise.all(savePromises);
-                console.log('All evaluations saved successfully');
                 
                 // Reset current evaluation scores
                 this.currentEvaluationScores = {};
@@ -911,11 +863,9 @@ document.addEventListener('alpine:init', () => {
                 
                 // If player card is open for the same player, refresh that too
                 if (this.viewingPlayer && this.viewingPlayer.id === this.evaluatingPlayer.id) {
-                    console.log('Reloading evaluations for viewing player after save');
                     await this.loadEvaluationHistory(this.viewingPlayer);
                     
                     // Force update spider chart with new data
-                    console.log('Forcing spider chart update after save');
                     this.forceUpdateSpiderChart();
                     
                     // BELANGRIJK: Wis de oude advice en stel status in op generating
@@ -938,7 +888,6 @@ document.addEventListener('alpine:init', () => {
                 alert('Evaluation saved successfully! AI advice is being generated...');
                 
             } catch (error) {
-                console.error('Error saving evaluations:', error);
                 alert('Error saving evaluation. Please try again.');
             }
         },
@@ -983,23 +932,19 @@ document.addEventListener('alpine:init', () => {
                         this.adviceStatus = 'current';
                         this.adviceLoading = false;
                         this.lastAdviceTimestamp = data.data.generated_at;
-                        console.log('New AI advice received!');
                     } else {
                         // Dit is nog de oude advice, blijf pollen
-                        console.log('Still waiting for new advice, attempt:', attempts + 1);
                         setTimeout(() => {
                             this.pollForAdvice(player, attempts + 1);
                         }, 5000);
                     }
                 } else {
                     // Geen advice gevonden, blijf pollen
-                    console.log('No advice yet, attempt:', attempts + 1);
                     setTimeout(() => {
                         this.pollForAdvice(player, attempts + 1);
                     }, 5000);
                 }
             } catch (error) {
-                console.error('Error polling for advice:', error);
                 this.adviceLoading = false;
                 this.adviceStatus = 'error';
             }
@@ -1024,7 +969,6 @@ document.addEventListener('alpine:init', () => {
             
             const result = await response.json();
             if (!result.success) {
-                console.error('Failed to save evaluation:', result);
                 throw new Error('Failed to save evaluation');
             }
             
@@ -1040,7 +984,6 @@ document.addEventListener('alpine:init', () => {
 
         // Player History Methods
         async viewPlayerHistory(playerId) {
-            console.log('View history for player:', playerId);
             const player = this.teamPlayers.find(p => p.id == playerId);
             if (!player) return;
             
@@ -1066,14 +1009,13 @@ document.addEventListener('alpine:init', () => {
                     this.historyPlayer = data.data.player;
                 }
             } catch (error) {
-                console.error('Error loading player history:', error);
+                // Error loading player history
             } finally {
                 this.historyLoading = false;
             }
         },
 
         handleHistoryClick(playerId) {
-            console.log('Handle history click for player ID:', playerId);
             this.viewPlayerHistory(playerId);
         },
         
@@ -1087,7 +1029,6 @@ document.addEventListener('alpine:init', () => {
             try {
                 // Check if jsPDF is loaded
                 if (typeof window.jspdf === 'undefined') {
-                    console.error('jsPDF not loaded');
                     alert('PDF library not loaded. Please refresh the page and try again.');
                     return;
                 }
@@ -1247,7 +1188,6 @@ document.addEventListener('alpine:init', () => {
                 }
                 
             } catch (error) {
-                console.error('Error generating PDF:', error);
                 alert('Error generating PDF: ' + error.message);
                 
                 // Restore button if it exists
