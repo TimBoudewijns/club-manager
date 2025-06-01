@@ -183,56 +183,13 @@ class Club_Manager_Shortcode {
             .club-manager-app .border-orange-300 { border-color: #fdba74 !important; }
             .club-manager-app .border-orange-500 { border-color: #f97316 !important; }
             
-            /* FORCE ALL BUTTONS TO USE CORRECT COLORS */
-            .club-manager-app button[class*="bg-gradient-to-r"],
-            .club-manager-app button[class*="from-orange-500"],
-            .club-manager-app button[class*="to-orange-600"],
-            .club-manager-app button[class*="bg-orange-"],
-            .club-manager-app .btn-primary,
-            .club-manager-app button.btn {
-                background-image: none !important;
-                background-color: #f97316 !important;
-                border-color: #f97316 !important;
+            /* Fix gradient buttons specifically */
+            .club-manager-app .bg-gradient-to-r.from-orange-500.to-orange-600 {
+                background-image: linear-gradient(to right, #f97316, #ea580c) !important;
             }
             
-            /* Gradient buttons specifically */
-            .club-manager-app button[class*="bg-gradient-to-r"] {
-                background-image: linear-gradient(to right, #f97316 0%, #ea580c 100%) !important;
-            }
-            
-            /* All button hovers */
-            .club-manager-app button[class*="bg-gradient-to-r"]:hover,
-            .club-manager-app button[class*="from-orange-500"]:hover,
-            .club-manager-app button[class*="to-orange-600"]:hover,
-            .club-manager-app button[class*="bg-orange-"]:hover,
-            .club-manager-app .btn-primary:hover,
-            .club-manager-app button.btn:hover {
-                background-image: none !important;
-                background-color: #ea580c !important;
-                border-color: #ea580c !important;
-            }
-            
-            /* Gradient button hovers */
-            .club-manager-app button[class*="bg-gradient-to-r"]:hover {
-                background-image: linear-gradient(to right, #ea580c 0%, #c2410c 100%) !important;
-            }
-            
-            /* Override DaisyUI button completely */
-            .club-manager-app .btn {
-                --btn-color: #f97316 !important;
-                --btn-bg: #f97316 !important;
-                --btn-border: #f97316 !important;
-            }
-            
-            /* Target the specific Create New Team button and similar */
-            .club-manager-app button {
-                transition: all 0.2s ease;
-            }
-            
-            /* Nuclear option - target ALL orange buttons */
-            button[class*="orange"] {
-                --tw-gradient-from: #f97316 !important;
-                --tw-gradient-to: #ea580c !important;
+            .club-manager-app .bg-gradient-to-r.from-orange-600.to-orange-700 {
+                background-image: linear-gradient(to right, #ea580c, #c2410c) !important;
             }
             
             /* Hover states */
@@ -243,6 +200,14 @@ class Club_Manager_Shortcode {
             .club-manager-app .hover\:bg-orange-700:hover { background-color: #c2410c !important; }
             .club-manager-app .hover\:text-orange-600:hover { color: #ea580c !important; }
             .club-manager-app .hover\:text-orange-900:hover { color: #7c2d12 !important; }
+            
+            .club-manager-app .hover\:from-orange-600:hover {
+                --tw-gradient-from: #ea580c !important;
+            }
+            
+            .club-manager-app .hover\:to-orange-700:hover {
+                --tw-gradient-to: #c2410c !important;
+            }
             
             /* Focus states */
             .club-manager-app .focus\:border-orange-500:focus { border-color: #f97316 !important; }
