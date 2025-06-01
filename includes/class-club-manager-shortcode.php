@@ -37,34 +37,6 @@ class Club_Manager_Shortcode {
                 false
             );
             
-            // Configure Tailwind IMMEDIATELY with correct orange colors
-            wp_add_inline_script('tailwind-css', '
-                if (typeof tailwind !== "undefined") {
-                    tailwind.config = {
-                        darkMode: "class",
-                        theme: {
-                            extend: {
-                                colors: {
-                                    orange: {
-                                        50: "#fff7ed",
-                                        100: "#ffedd5",
-                                        200: "#fed7aa",
-                                        300: "#fdba74",
-                                        400: "#fb923c",
-                                        500: "#f97316",
-                                        600: "#ea580c",
-                                        700: "#c2410c",
-                                        800: "#9a3412",
-                                        900: "#7c2d12",
-                                        950: "#431407"
-                                    }
-                                }
-                            }
-                        }
-                    };
-                }
-            ', 'after');
-            
             // Enqueue DaisyUI
             wp_enqueue_style(
                 'daisyui',
@@ -245,6 +217,41 @@ class Club_Manager_Shortcode {
                 background-color: #f97316 !important;
             }
         </style>
+        <script>
+            // Wait for Tailwind to be available, then configure it
+            function configureTailwind() {
+                if (typeof tailwind !== 'undefined') {
+                    tailwind.config = {
+                        darkMode: 'class',
+                        theme: {
+                            extend: {
+                                colors: {
+                                    orange: {
+                                        50: '#fff7ed',
+                                        100: '#ffedd5',
+                                        200: '#fed7aa',
+                                        300: '#fdba74',
+                                        400: '#fb923c',
+                                        500: '#f97316',
+                                        600: '#ea580c',
+                                        700: '#c2410c',
+                                        800: '#9a3412',
+                                        900: '#7c2d12',
+                                        950: '#431407'
+                                    }
+                                }
+                            }
+                        }
+                    };
+                } else {
+                    // If Tailwind is not ready, try again in 100ms
+                    setTimeout(configureTailwind, 100);
+                }
+            }
+            
+            // Start configuration attempt
+            configureTailwind();
+        </script>
         <div class="club-manager-app min-h-screen bg-white" x-data="clubManager()" data-theme="light">
             <div class="w-full px-4 md:px-6 lg:px-8 py-8">
                 <!-- Header Section -->
