@@ -12,6 +12,22 @@ class Club_Manager_Shortcode {
         
         // Only enqueue if shortcode is present
         if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'club_manager')) {
+            // FIRST: Add inline CSS that loads before everything else
+            wp_add_inline_style('wp-block-library', '
+                /* DaisyUI Theme Override - Must load before DaisyUI */
+                :root {
+                    --p: 25 95% 53%;  /* Primary color: #f97316 */
+                    --pf: 27 96% 48%; /* Primary focus: #ea580c */
+                    --pc: 0 0% 100%;   /* Primary content: white */
+                }
+                
+                [data-theme="light"] {
+                    --p: 25 95% 53%;
+                    --pf: 27 96% 48%;
+                    --pc: 0 0% 100%;
+                }
+            ');
+            
             // Enqueue Tailwind CSS via CDN
             wp_enqueue_script(
                 'tailwind-css',
@@ -21,23 +37,25 @@ class Club_Manager_Shortcode {
                 false
             );
             
-            // Add Tailwind config
+            // Configure Tailwind IMMEDIATELY with correct orange colors
             wp_add_inline_script('tailwind-css', '
                 tailwind.config = {
+                    darkMode: "class",
                     theme: {
                         extend: {
                             colors: {
                                 orange: {
-                                    50: "#fff3e0",
-                                    100: "#ffe0b2",
-                                    200: "#ffcc80",
-                                    300: "#ffb74d",
-                                    400: "#ffa726",
-                                    500: "#ff9800",
-                                    600: "#fb8c00",
-                                    700: "#f57c00",
-                                    800: "#ef6c00",
-                                    900: "#e65100",
+                                    50: "#fff7ed",
+                                    100: "#ffedd5",
+                                    200: "#fed7aa",
+                                    300: "#fdba74",
+                                    400: "#fb923c",
+                                    500: "#f97316",
+                                    600: "#ea580c",
+                                    700: "#c2410c",
+                                    800: "#9a3412",
+                                    900: "#7c2d12",
+                                    950: "#431407"
                                 }
                             }
                         }
@@ -145,6 +163,85 @@ class Club_Manager_Shortcode {
         
         ob_start();
         ?>
+        <style>
+            /* Critical CSS - Load correct orange colors IMMEDIATELY */
+            .club-manager-app .bg-orange-50 { background-color: #fff7ed !important; }
+            .club-manager-app .bg-orange-100 { background-color: #ffedd5 !important; }
+            .club-manager-app .bg-orange-200 { background-color: #fed7aa !important; }
+            .club-manager-app .bg-orange-300 { background-color: #fdba74 !important; }
+            .club-manager-app .bg-orange-400 { background-color: #fb923c !important; }
+            .club-manager-app .bg-orange-500 { background-color: #f97316 !important; }
+            .club-manager-app .bg-orange-600 { background-color: #ea580c !important; }
+            .club-manager-app .bg-orange-700 { background-color: #c2410c !important; }
+            .club-manager-app .bg-orange-800 { background-color: #9a3412 !important; }
+            
+            .club-manager-app .text-orange-400 { color: #fb923c !important; }
+            .club-manager-app .text-orange-500 { color: #f97316 !important; }
+            .club-manager-app .text-orange-600 { color: #ea580c !important; }
+            .club-manager-app .text-orange-700 { color: #c2410c !important; }
+            .club-manager-app .text-orange-800 { color: #9a3412 !important; }
+            
+            .club-manager-app .border-orange-200 { border-color: #fed7aa !important; }
+            .club-manager-app .border-orange-300 { border-color: #fdba74 !important; }
+            .club-manager-app .border-orange-500 { border-color: #f97316 !important; }
+            
+            /* Gradients with correct colors */
+            .club-manager-app .from-orange-50 { --tw-gradient-from: #fff7ed !important; }
+            .club-manager-app .from-orange-400 { --tw-gradient-from: #fb923c !important; }
+            .club-manager-app .from-orange-500 { --tw-gradient-from: #f97316 !important; }
+            .club-manager-app .to-orange-500 { --tw-gradient-to: #f97316 !important; }
+            .club-manager-app .to-orange-600 { --tw-gradient-to: #ea580c !important; }
+            
+            /* Button gradients */
+            .club-manager-app .bg-gradient-to-r.from-orange-500.to-orange-600 {
+                background: linear-gradient(to right, #f97316, #ea580c) !important;
+            }
+            
+            /* DaisyUI button overrides */
+            .club-manager-app .btn-primary,
+            .club-manager-app .btn {
+                --btn-color-primary: #f97316 !important;
+                background-color: #f97316 !important;
+                border-color: #f97316 !important;
+            }
+            
+            .club-manager-app .btn-primary:hover,
+            .club-manager-app .btn:hover {
+                background-color: #ea580c !important;
+                border-color: #ea580c !important;
+            }
+            
+            /* Hover states */
+            .club-manager-app .hover\:bg-orange-50:hover { background-color: #fff7ed !important; }
+            .club-manager-app .hover\:bg-orange-100:hover { background-color: #ffedd5 !important; }
+            .club-manager-app .hover\:bg-orange-200:hover { background-color: #fed7aa !important; }
+            .club-manager-app .hover\:bg-orange-600:hover { background-color: #ea580c !important; }
+            .club-manager-app .hover\:bg-orange-700:hover { background-color: #c2410c !important; }
+            .club-manager-app .hover\:text-orange-600:hover { color: #ea580c !important; }
+            .club-manager-app .hover\:text-orange-900:hover { color: #7c2d12 !important; }
+            
+            /* Focus states */
+            .club-manager-app .focus\:border-orange-500:focus { border-color: #f97316 !important; }
+            .club-manager-app .focus\:ring-orange-200:focus { --tw-ring-color: #fed7aa !important; }
+            
+            /* Checkbox and radio buttons */
+            .club-manager-app [type="checkbox"]:checked,
+            .club-manager-app [type="radio"]:checked {
+                background-color: #f97316 !important;
+                border-color: #f97316 !important;
+            }
+            
+            /* Range inputs */
+            .club-manager-app .range-orange::-webkit-slider-thumb,
+            .club-manager-app .range::-webkit-slider-thumb {
+                background-color: #f97316 !important;
+            }
+            
+            .club-manager-app .range-orange::-moz-range-thumb,
+            .club-manager-app .range::-moz-range-thumb {
+                background-color: #f97316 !important;
+            }
+        </style>
         <div class="club-manager-app min-h-screen bg-white" x-data="clubManager()" data-theme="light">
             <div class="w-full px-4 md:px-6 lg:px-8 py-8">
                 <!-- Header Section -->
