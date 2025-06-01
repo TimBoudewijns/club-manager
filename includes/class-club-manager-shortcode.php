@@ -23,31 +23,27 @@ class Club_Manager_Shortcode {
             
             // Add Tailwind config
             wp_add_inline_script('tailwind-css', '
-                window.addEventListener("DOMContentLoaded", function() {
-                    if (typeof tailwind !== "undefined") {
-                        tailwind.config = {
-                            theme: {
-                                extend: {
-                                    colors: {
-                                        orange: {
-                                            50: "#fff3e0",
-                                            100: "#ffe0b2",
-                                            200: "#ffcc80",
-                                            300: "#ffb74d",
-                                            400: "#ffa726",
-                                            500: "#ff9800",
-                                            600: "#fb8c00",
-                                            700: "#f57c00",
-                                            800: "#ef6c00",
-                                            900: "#e65100",
-                                        }
-                                    }
+                tailwind.config = {
+                    theme: {
+                        extend: {
+                            colors: {
+                                orange: {
+                                    50: "#fff3e0",
+                                    100: "#ffe0b2",
+                                    200: "#ffcc80",
+                                    300: "#ffb74d",
+                                    400: "#ffa726",
+                                    500: "#ff9800",
+                                    600: "#fb8c00",
+                                    700: "#f57c00",
+                                    800: "#ef6c00",
+                                    900: "#e65100",
                                 }
                             }
-                        };
+                        }
                     }
-                });
-            ', 'after');
+                };
+            ', 'before');
             
             // Enqueue DaisyUI
             wp_enqueue_style(
@@ -149,7 +145,7 @@ class Club_Manager_Shortcode {
         
         ob_start();
         ?>
-        <div class="club-manager-app min-h-screen bg-white" x-data="clubManager()"">
+        <div class="club-manager-app min-h-screen bg-white" x-data="clubManager()" data-theme="light">
             <div class="w-full px-4 md:px-6 lg:px-8 py-8">
                 <!-- Header Section -->
                 <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8 mb-8 border-t-4 border-orange-500">
