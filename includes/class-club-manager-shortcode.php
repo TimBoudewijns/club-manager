@@ -106,13 +106,16 @@ class Club_Manager_Shortcode {
                 CLUB_MANAGER_VERSION
             );
             
-            // Localize the AJAX data
-            wp_localize_script('jquery', 'clubManagerAjax', array(
+            // Ensure jQuery is loaded
+            wp_enqueue_script('jquery');
+            
+            // Localize the AJAX data - attach to wp.clubManagerAjax instead of jQuery
+            wp_localize_script('club-manager-frontend', 'clubManagerAjax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('club_manager_nonce'),
                 'user_id' => get_current_user_id(),
                 'is_logged_in' => is_user_logged_in(),
-                'preferred_season' => get_user_meta(get_current_user_id(), 'cm_preferred_season', true)
+                'preferred_season' => get_user_meta(get_current_user_id(), 'cm_preferred_season', true) ?: '2024-2025'
             ));
             
             // Enqueue custom JS file
@@ -242,6 +245,15 @@ class Club_Manager_Shortcode {
                 background-color: #f97316 !important;
             }
         </style>
+        <script>
+            console.log('Club Manager: Checking Alpine.js...');
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log('DOM loaded, Alpine status:', typeof Alpine);
+            });
+            document.addEventListener('alpine:init', function() {
+                console.log('Alpine initialized!');
+            });
+        </script>
         <div class="club-manager-app min-h-screen bg-white" x-data="clubManager()" data-theme="light">
             <div class="w-full px-4 md:px-6 lg:px-8 py-8">
                 <!-- Header Section -->
