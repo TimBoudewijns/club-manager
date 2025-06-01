@@ -19,12 +19,35 @@ class Club_Manager_Shortcode {
                     --p: 25 95% 53%;  /* Primary color: #f97316 */
                     --pf: 27 96% 48%; /* Primary focus: #ea580c */
                     --pc: 0 0% 100%;   /* Primary content: white */
+                    --s: 25 95% 53%;  /* Secondary: same as primary */
+                    --sf: 27 96% 48%; 
+                    --sc: 0 0% 100%;
+                    --a: 25 95% 53%;  /* Accent: same as primary */
+                    --af: 27 96% 48%;
+                    --ac: 0 0% 100%;
                 }
                 
                 [data-theme="light"] {
                     --p: 25 95% 53%;
                     --pf: 27 96% 48%;
                     --pc: 0 0% 100%;
+                    --s: 25 95% 53%;
+                    --sf: 27 96% 48%;
+                    --sc: 0 0% 100%;
+                    --a: 25 95% 53%;
+                    --af: 27 96% 48%;
+                    --ac: 0 0% 100%;
+                }
+                
+                /* Force button colors */
+                .btn-primary {
+                    background-color: #f97316 !important;
+                    border-color: #f97316 !important;
+                }
+                
+                .btn-primary:hover {
+                    background-color: #ea580c !important;
+                    border-color: #ea580c !important;
                 }
             ');
             
@@ -184,6 +207,34 @@ class Club_Manager_Shortcode {
             .club-manager-app .btn:hover {
                 background-color: #ea580c !important;
                 border-color: #ea580c !important;
+            }
+            
+            /* Specific button gradient overrides */
+            .club-manager-app button.bg-gradient-to-r {
+                background-image: linear-gradient(to right, #f97316, #ea580c) !important;
+            }
+            
+            .club-manager-app button.bg-gradient-to-r:hover {
+                background-image: linear-gradient(to right, #ea580c, #c2410c) !important;
+            }
+            
+            /* Orange background buttons */
+            .club-manager-app button.bg-orange-500 {
+                background-color: #f97316 !important;
+            }
+            
+            .club-manager-app button.bg-orange-600 {
+                background-color: #ea580c !important;
+            }
+            
+            /* Ensure all gradient buttons use correct colors */
+            .club-manager-app .from-orange-500 {
+                --tw-gradient-from: #f97316 !important;
+                --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(249, 115, 22, 0)) !important;
+            }
+            
+            .club-manager-app .to-orange-600 {
+                --tw-gradient-to: #ea580c !important;
             }
             
             /* Hover states */
