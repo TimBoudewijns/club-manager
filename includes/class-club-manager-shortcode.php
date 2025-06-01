@@ -12,6 +12,44 @@ class Club_Manager_Shortcode {
         
         // Only enqueue if shortcode is present
         if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'club_manager')) {
+            // Add critical inline CSS to prevent color flash
+            wp_add_inline_style('wp-block-library', '
+                /* Critical CSS to prevent orange color flash */
+                .club-manager-app .bg-gradient-to-r {
+                    background-image: linear-gradient(to right, #ff9800, #fb8c00) !important;
+                }
+                .club-manager-app .from-orange-500 {
+                    --tw-gradient-from: #ff9800 !important;
+                }
+                .club-manager-app .to-orange-600 {
+                    --tw-gradient-to: #fb8c00 !important;
+                }
+                .club-manager-app .bg-orange-500 {
+                    background-color: #ff9800 !important;
+                }
+                .club-manager-app .bg-orange-600 {
+                    background-color: #fb8c00 !important;
+                }
+                .club-manager-app .text-orange-500 {
+                    color: #ff9800 !important;
+                }
+                .club-manager-app .text-orange-600 {
+                    color: #fb8c00 !important;
+                }
+                .club-manager-app .border-orange-500 {
+                    border-color: #ff9800 !important;
+                }
+                .club-manager-app .hover\:from-orange-600:hover {
+                    --tw-gradient-from: #fb8c00 !important;
+                }
+                .club-manager-app .hover\:to-orange-700:hover {
+                    --tw-gradient-to: #f57c00 !important;
+                }
+                .club-manager-app [x-cloak] {
+                    display: none !important;
+                }
+            ');
+            
             // Enqueue Tailwind CSS via CDN
             wp_enqueue_script(
                 'tailwind-css',
@@ -149,7 +187,7 @@ class Club_Manager_Shortcode {
         
         ob_start();
         ?>
-        <div class="club-manager-app min-h-screen bg-white" x-data="clubManager()">
+        <div class="club-manager-app min-h-screen bg-white" x-data="clubManager()" x-cloak>
             <div class="w-full px-4 md:px-6 lg:px-8 py-8">
                 <!-- Header Section -->
                 <div class="bg-white rounded-2xl shadow-xl p-4 md:p-8 mb-8 border-t-4 border-orange-500">
