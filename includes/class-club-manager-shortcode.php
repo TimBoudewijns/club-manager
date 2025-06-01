@@ -106,10 +106,16 @@ class Club_Manager_Shortcode {
                 CLUB_MANAGER_VERSION
             );
             
-            // Ensure jQuery is loaded
-            wp_enqueue_script('jquery');
+            // Enqueue custom JS file with jQuery dependency  
+            wp_enqueue_script(
+                'club-manager-frontend',
+                CLUB_MANAGER_PLUGIN_URL . 'assets/js/club-manager-frontend.js',
+                array('jquery'),
+                CLUB_MANAGER_VERSION,
+                true
+            );
             
-            // Localize the AJAX data - attach to wp.clubManagerAjax instead of jQuery
+            // Localize the AJAX data
             wp_localize_script('club-manager-frontend', 'clubManagerAjax', array(
                 'ajax_url' => admin_url('admin-ajax.php'),
                 'nonce' => wp_create_nonce('club_manager_nonce'),
@@ -135,14 +141,6 @@ class Club_Manager_Shortcode {
                 '3.x.x',
                 true
             );
-            
-            // Add defer attribute to Alpine.js
-            add_filter('script_loader_tag', function($tag, $handle) {
-                if ('alpinejs' === $handle) {
-                    return str_replace(' src', ' defer src', $tag);
-                }
-                return $tag;
-            }, 10, 2);
         }
     }
     
@@ -245,15 +243,6 @@ class Club_Manager_Shortcode {
                 background-color: #f97316 !important;
             }
         </style>
-        <script>
-            console.log('Club Manager: Checking Alpine.js...');
-            document.addEventListener('DOMContentLoaded', function() {
-                console.log('DOM loaded, Alpine status:', typeof Alpine);
-            });
-            document.addEventListener('alpine:init', function() {
-                console.log('Alpine initialized!');
-            });
-        </script>
         <div class="club-manager-app min-h-screen bg-white" x-data="clubManager()" data-theme="light">
             <div class="w-full px-4 md:px-6 lg:px-8 py-8">
                 <!-- Header Section -->
